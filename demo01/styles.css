@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#container {
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.tabs {
+    margin-top: 20px;
+}
+
+.tablinks {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.tabcontent {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+#homeTab {
+    background-color: #4CAF50;
+}
+
+#faqTab {
+    background-color: #008CBA;
+}
+
+#homeContent {
+    display: block;
+}
+
+#faqContent {
+    display: none;
+}

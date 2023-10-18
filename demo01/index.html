@@ -2,38 +2,56 @@
 <html>
 <head>
     <title>Metro Train Website</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <div id="container">
-        <h1>Metro Train Journey Planner</h1>
-        <div class="login-container">
-            <button id="loginButton">Admin Login</button>
+        <h1>Metro Train Website</h1>
+        <div class="tabs">
+            <button class="tablinks" id="homeTab" onclick="openTab('homeContent')">Home</button>
+            <button class="tablinks" id="faqTab" onclick="openTab('faqContent')">FAQ</button>
+            <button class="tablinks" id="facilitiesTab" onclick="openTab('facilitiesContent')">Facilities</button>
         </div>
-        <div class="form-container" id="userForm">
+        <div id="homeContent" class="tabcontent">
             <label for="sourceStation">Select Source Station:</label>
             <select id="sourceStation"></select>
             <label for="destinationStation">Select Destination Station:</label>
             <select id="destinationStation"></select>
-            <button id="calculateRoute">Plan Your Journey</button>
-        </div>
-        <div class="admin-container" id="adminForm" style="display: none;">
-            <h2>Admin Page</h2>
-            <form id="stationForm">
-                <label for="newStation">New Station:</label>
-                <input type="text" id="newStation" required>
-                <button type="submit">Add Station</button>
-            </form>
-            <label for="modifyMatrix">Modify Cost/Distance Matrix:</label>
-            <textarea id="modifyMatrix" rows="5"></textarea>
-            <button id="updateMatrix">Update Matrix</button>
-            <button id="logoutButton">Logout</button>
-        </div>
-        <div class="result-container">
+            <button id="calculateRoute">Calculate Route</button>
             <p id="result"></p>
             <p id="ticketCost"></p>
             <p id="travelDistance"></p>
             <p id="travelTime"></p>
+        </div>
+        <div id="faqContent" class="tabcontent">
+            <h2>Frequently Asked Questions (FAQ)</h2>
+            <p>Q: How do I purchase tickets?</p>
+            <p>A: You can purchase tickets at the station's ticket counters or through our mobile app.</p>
+            <p>Q: Are there discounts for seniors and children?</p>
+            <p>A: Yes, we offer discounts for seniors and children under the age of 12.</p>
+            <!-- Add more FAQ items as needed -->
+        </div>
+        <div id="facilitiesContent" class="tabcontent">
+            <h2>Facilities</h2>
+            <p>Our metro stations provide various facilities for your convenience:</p>
+            <ul>
+                <li>Restrooms</li>
+                <li>Wi-Fi access</li>
+                <li>Ticket vending machines</li>
+                <li>Information kiosks</li>
+                <!-- Add more facilities as needed -->
+            </ul>
+        </div>
+        <div id="popup" class="popup">
+            <span class="close-button" onclick="closePopup()">&times;</span>
+            <div id="popup-content">
+                <h2>Route and Cost</h2>
+                <p id="popup-result"></p>
+                <p id="popup-ticketCost"></p>
+                <p id="popup-travelDistance"></p>
+                <p id="popup-travelTime"></p>
+                <button onclick="closePopup()">Close</button>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

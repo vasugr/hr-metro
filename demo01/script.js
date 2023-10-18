@@ -2,62 +2,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const sourceStation = document.getElementById("sourceStation");
     const destinationStation = document.getElementById("destinationStation");
     const calculateRouteButton = document.getElementById("calculateRoute");
-    const result = document.getElementById("result");
-    const ticketCost = document.getElementById("ticketCost");
-    const travelDistance = document.getElementById("travelDistance");
-    const travelTime = document.getElementById("travelTime");
-
-    const userForm = document.getElementById("userForm");
-    const adminForm = document.getElementById("adminForm");
-    const stationForm = document.getElementById("stationForm");
-    const newStation = document.getElementById("newStation");
-    const modifyMatrix = document.getElementById("modifyMatrix");
-    const updateMatrix = document.getElementById("updateMatrix");
-    const loginButton = document.getElementById("loginButton");
-    const logoutButton = document.getElementById("logoutButton");
-
-    let isAdmin = false;
-
-    // Admin login button click event
-    loginButton.addEventListener("click", function() {
-        adminForm.style.display = "block";
-        userForm.style.display = "none";
-        loginButton.style.display = "none";
-    });
-
-    // Logout button click event
-    logoutButton.addEventListener("click", function() {
-        adminForm.style.display = "none";
-        userForm.style.display = "block";
-        loginButton.style.display = "block";
-    });
-
-    function addStation(stationName) {
-        // Randomly generate cost values (for all stations) between 1 and 10
-        const costValues = {};
-        for (const station in costMatrix) {
-            costValues[station] = Math.floor(Math.random() * 10) + 1;
-        }
-        costMatrix[stationName] = costValues;
-
-        // Randomly generate distance values (for all stations) between 5 and 20 kilometers
-        const distanceValues = {};
-        for (const station in distanceMatrix) {
-            distanceValues[station] = Math.floor(Math.random() * 16) + 5;
-        }
-        distanceMatrix[stationName] = distanceValues;
-    }
-
-    stationForm.addEventListener("submit", function(e) {
-        e.preventDefault();
-        const newStationName = newStation.value.trim();
-        if (newStationName) {
-            addStation(newStationName);
-            // You can update the dropdowns with the new station here
-            newStation.value = ""; // Clear the input field
-            modifyMatrix.value = JSON.stringify(costMatrix, null, 2); // Update the matrix display
-        }
-    });
+   
+    const homeTab = document.getElementById("homeTab");
+    const faqTab = document.getElementById("faqTab");
+    const facilitiesTab = document.getElementById("facilitiesTab");
+    const popup = document.getElementById("popup");
+    const popupResult = document.getElementById("popup-result");
+    const popupTicketCost = document.getElementById("popup-ticketCost");
+    const popupTravelDistance = document.getElementById("popup-travelDistance");
+    const popupTravelTime = document.getElementById("popup-travelTime");
 
     // Create a cost matrix and distance matrix
     const costMatrix = {
@@ -120,7 +73,6 @@ document.addEventListener("DOMContentLoaded", function() {
             destinationStation.add(option2);
         });
     }
-
     // Function to calculate the ticket cost
     function calculateTicketCost(source, destination) {
         return costMatrix[source][destination];
@@ -131,23 +83,57 @@ document.addEventListener("DOMContentLoaded", function() {
         const distance = distanceMatrix[source][destination];
         const averageSpeed = 40; // Example speed in kilometers per hour
         const timeInHours = distance / averageSpeed;
-        return timeInHours;
+        return timeInHours * 60; // Convert hours to minutes
     }
 
     // Call the function to populate the dropdowns
     populateDropdowns();
 
+    // Toggle between Home and FAQ content
+
+
+    homeTab.addEventListener("click", function() {
+        showContent("homeContent");
+    });
+
+    faqTab.addEventListener("click", function() {
+        showContent("faqContent");
+    });
+
+    facilitiesTab.addEventListener("click", function() {
+        showContent("facilitiesContent");
+    });
+    
     calculateRouteButton.addEventListener("click", function() {
         const selectedSource = sourceStation.value;
         const selectedDestination = destinationStation.value;
         const route = `You have selected the route from ${selectedSource} to ${selectedDestination}.`;
         const cost = calculateTicketCost(selectedSource, selectedDestination);
         const distance = distanceMatrix[selectedSource][selectedDestination];
-        const time = calculateTravelTime(selectedSource, selectedDestination);
-        
-        result.textContent = route;
-        ticketCost.textContent = `The ticket cost is $${cost}`;
-        travelDistance.textContent = `The travel distance is ${distance} kilometers`;
-        travelTime.textContent = `The estimated travel time is approximately ${time.toFixed(2)} hours`;
+        const travelTimeMinutes = calculateTravelTime(selectedSource, selectedDestination);
+
+        popupResult.textContent = route;
+        popupTicketCost.textContent = `The ticket cost is $${cost}`;
+        popupTravelDistance.textContent = `The travel distance is ${distance} kilometers`;
+        popupTravelTime.textContent = `The estimated travel time is approximately ${travelTimeMinutes} minutes`;
+
+        // Display the popup
+        popup.style.display = "block";
     });
 });
+
+function showContent(contentId) {
+    document.querySelectorAll(".tabcontent").forEach(function(content) {
+        content.style.display = "none";
+    });
+    document.querySelectorAll(".tablinks").forEach(function(tablink) {
+        tablink.style.backgroundColor = "#008CBA";
+    });
+    document.getElementById(contentId).style.display = "block";
+}
+
+function closePopup() {
+    const popup = document.getElementById("popup");
+    popup.style.display = "none";
+}
+
