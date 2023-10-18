@@ -7,6 +7,58 @@ document.addEventListener("DOMContentLoaded", function() {
     const travelDistance = document.getElementById("travelDistance");
     const travelTime = document.getElementById("travelTime");
 
+    const userForm = document.getElementById("userForm");
+    const adminForm = document.getElementById("adminForm");
+    const stationForm = document.getElementById("stationForm");
+    const newStation = document.getElementById("newStation");
+    const modifyMatrix = document.getElementById("modifyMatrix");
+    const updateMatrix = document.getElementById("updateMatrix");
+    const loginButton = document.getElementById("loginButton");
+    const logoutButton = document.getElementById("logoutButton");
+
+    let isAdmin = false;
+
+    // Admin login button click event
+    loginButton.addEventListener("click", function() {
+        adminForm.style.display = "block";
+        userForm.style.display = "none";
+        loginButton.style.display = "none";
+    });
+
+    // Logout button click event
+    logoutButton.addEventListener("click", function() {
+        adminForm.style.display = "none";
+        userForm.style.display = "block";
+        loginButton.style.display = "block";
+    });
+
+    function addStation(stationName) {
+        // Randomly generate cost values (for all stations) between 1 and 10
+        const costValues = {};
+        for (const station in costMatrix) {
+            costValues[station] = Math.floor(Math.random() * 10) + 1;
+        }
+        costMatrix[stationName] = costValues;
+
+        // Randomly generate distance values (for all stations) between 5 and 20 kilometers
+        const distanceValues = {};
+        for (const station in distanceMatrix) {
+            distanceValues[station] = Math.floor(Math.random() * 16) + 5;
+        }
+        distanceMatrix[stationName] = distanceValues;
+    }
+
+    stationForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const newStationName = newStation.value.trim();
+        if (newStationName) {
+            addStation(newStationName);
+            // You can update the dropdowns with the new station here
+            newStation.value = ""; // Clear the input field
+            modifyMatrix.value = JSON.stringify(costMatrix, null, 2); // Update the matrix display
+        }
+    });
+
     // Create a cost matrix and distance matrix
     const costMatrix = {
         "Station 1": {

@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Haryana Metro</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Metro Train Website</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <div id="container">
-        <h1>Haryana Metro</h1>
-        <div class="form-container">
+        <h1>Metro Train Journey Planner</h1>
+        <div class="login-container">
+            <button id="loginButton">Admin Login</button>
+        </div>
+        <div class="form-container" id="userForm">
             <label for="sourceStation">Select Source Station:</label>
             <select id="sourceStation"></select>
             <label for="destinationStation">Select Destination Station:</label>
             <select id="destinationStation"></select>
-            <button id="calculateRoute">Calculate</button>
+            <button id="calculateRoute">Plan Your Journey</button>
+        </div>
+        <div class="admin-container" id="adminForm" style="display: none;">
+            <h2>Admin Page</h2>
+            <form id="stationForm">
+                <label for="newStation">New Station:</label>
+                <input type="text" id="newStation" required>
+                <button type="submit">Add Station</button>
+            </form>
+            <label for="modifyMatrix">Modify Cost/Distance Matrix:</label>
+            <textarea id="modifyMatrix" rows="5"></textarea>
+            <button id="updateMatrix">Update Matrix</button>
+            <button id="logoutButton">Logout</button>
         </div>
         <div class="result-container">
             <p id="result"></p>
